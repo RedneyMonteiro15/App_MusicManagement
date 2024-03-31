@@ -1,25 +1,25 @@
 package com.example.musicmanagement
 
 import android.os.Bundle
-import android.text.Layout
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.AlignmentSpan
-import android.view.Menu
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.musicmanagement.databinding.ActivityHomeBinding
 import com.google.android.material.navigation.NavigationView
 
+
 class Home : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class Home : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarHome.toolbar)
 
-        val drawerLayout: DrawerLayout = binding.drawerLayout
+        drawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_home)
 
@@ -41,33 +41,29 @@ class Home : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        // Adiciona um ouvinte para atualizar o título da barra de ferramentas quando a navegação ocorrer
+        val addIcon: ImageView = findViewById(R.id.imageView5)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            val textView: TextView = findViewById(R.id.textView5)
             when (destination.id) {
-                R.id.nav_home -> updateToolbarTitle("Home")
-                R.id.nav_gallery -> updateToolbarTitle("Gallery")
-                R.id.nav_slideshow -> updateToolbarTitle("Slideshow")
+                R.id.nav_home -> {
+                    textView.text = "Home"
+                    addIcon.visibility = View.VISIBLE
+                }
+                R.id.nav_gallery -> {
+                    textView.text = "Gallery"
+                    addIcon.visibility = View.INVISIBLE
+                }
+                R.id.nav_slideshow -> {
+                    textView.text = "Slideshow"
+                    addIcon.visibility = View.INVISIBLE
+                }
             }
         }
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home, menu)
-        return true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_home)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    fun updateToolbarTitle(title: String) {
-        supportActionBar?.apply {
-            // Centraliza o título
-            val centeredTitle = SpannableString(title)
-            centeredTitle.setSpan(AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, title.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-            this.title = "centeredTitle"
+        val menuIcon: ImageView = findViewById(R.id.imageView4)
+        menuIcon.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
         }
     }
 }
