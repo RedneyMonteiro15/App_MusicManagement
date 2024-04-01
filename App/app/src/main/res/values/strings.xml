@@ -29,4 +29,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="my_account"><u>My account</u></string>
+    <string name="genres">Genres</string>
+    <string name="playlist">Playlist</string>
 </resources>

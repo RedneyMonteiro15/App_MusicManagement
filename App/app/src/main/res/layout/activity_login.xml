@@ -84,6 +84,14 @@
                 android:alpha="0.7"
                 android:text="@string/register" />
 
+            <ToggleButton
+                android:id="@+id/toggleButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buuton_border_color_blue"
+                android:text="ToggleButton"
+                android:textColor="@color/primary" />
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
